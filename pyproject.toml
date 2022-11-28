@@ -1,0 +1,28 @@
+[project]
+name = "advent_2022"
+version = "2022.12.0"
+description = "Solutions to Advent of Code 2022"
+readme = "README.md"
+license = {"file" = "LICENSE"}
+
+dependencies = [
+    "jupyterlab",
+    "jupyterlab-git",
+    "jupyterlab-vim",
+    "jupyterlab-lsp",
+    "python-lsp-server[flake8,rope]",
+    "ipympl",
+    "nodeenv",
+    "numpy",
+    "pandas",
+    "pre-commit",
+    "pytest",
+    "icecream"
+]
+
+[build-system]
+requires = [ "setuptools", "build" ]
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
