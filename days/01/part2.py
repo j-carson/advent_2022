@@ -8,8 +8,21 @@ from icecream import ic
 # --> Puzzle solution
 
 
+def parser(data):
+    current = 0
+    for line in data.splitlines():
+        if not line:
+            yield current
+            current = 0
+        else:
+            current += int(line)
+    if current:
+        yield current
+
+
 def solve(input_data):
-    return 0
+    data = sorted(parser(input_data))
+    return sum(data[-3:])
 
 
 # --> Test driven development helpers
@@ -25,7 +38,27 @@ def idfn(maybe_string):
 
 # Test any examples given in the problem
 @pytest.mark.parametrize(
-    "sample_data,sample_solution", [("first_example", 0)], ids=idfn
+    "sample_data,sample_solution",
+    [
+        (
+            """1000
+2000
+3000
+
+4000
+
+5000
+6000
+
+7000
+8000
+9000
+
+10000""",
+            45000,
+        )
+    ],
+    ids=idfn,
 )
 def test_samples(sample_data, sample_solution) -> None:
     assert solve(sample_data) == sample_solution
