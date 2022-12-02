@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -40,7 +41,7 @@ if __name__ == "__main__":
     ex = pytest.main([__file__, "--capture=tee-sys", "-v"])
     if ex != pytest.ExitCode.OK and ex != pytest.ExitCode.NO_TESTS_COLLECTED:
         print(f"tests FAILED ({ex})")
-        exit(1)
+        sys.exit(1)
     else:
         print("tests PASSED")
 
