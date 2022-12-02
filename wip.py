@@ -35,26 +35,17 @@ def test_samples(sample_data, sample_solution) -> None:
 
 if __name__ == "__main__":
 
-    # set up a debug log to hold icecream output
-    with Path("debug.log").open("w") as debug_log:
+    #  Run the test examples with icecream debug-trace turned on
+    ic.enable()
+    ex = pytest.main([__file__, "--capture=tee-sys", "-v"])
+    if ex != pytest.ExitCode.OK and ex != pytest.ExitCode.NO_TESTS_COLLECTED:
+        print(f"tests FAILED ({ex})")
+        exit(1)
+    else:
+        print("tests PASSED")
 
-        def debug_logger(stuff):
-            debug_log.write(stuff)
-            debug_log.write("\n")
-
-        ic.configureOutput(outputFunction=debug_logger)
-
-        #  Run the test examples with icecream debug-trace turned on
-        ic.enable()
-        ex = pytest.main([__file__])
-        if ex != pytest.ExitCode.OK and ex != pytest.ExitCode.NO_TESTS_COLLECTED:
-            print(f"tests FAILED ({ex})")
-            exit(1)
-        else:
-            print("tests PASSED")
-
-        #  Actual input data generally has more iterations, turn off log
-        ic.disable()
-        my_input = Path("input.txt").read_text()
-        result = solve(my_input)
-        print(result)
+    #  Actual input data generally has more iterations, turn off log
+    ic.disable()
+    my_input = Path("input.txt").read_text()
+    result = solve(my_input)
+    print(result)
