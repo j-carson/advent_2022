@@ -41,14 +41,6 @@ def idfn(maybe_string):
         return str(maybe_string)
 
 
-sample_data = """vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw"""
-
-
 def test_scores():
     assert scores["p"] == 16
     assert scores["L"] == 38
