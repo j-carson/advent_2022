@@ -1,3 +1,4 @@
+import re
 import sys
 from pathlib import Path
 
@@ -16,27 +17,16 @@ EXAMPLE = """2-4,6-8
 
 def parse(input_data):
     for line in input_data.splitlines():
-        a, b = line.split(",")
-        yield [int(aa) for aa in a.split("-")], [int(bb) for bb in b.split("-")]
+        numbers = [int(d) for d in re.findall(r"\d+", line)]
+        yield numbers[:2], numbers[2:]
 
 
 def overlap(b1, b2):
-    return any(
-        (
-            b2[0] <= b1[0] <= b2[1],
-            b2[0] <= b1[1] <= b2[1],
-            b1[0] <= b2[0] <= b1[1],
-            b1[0] <= b2[1] <= b1[1],
-        )
-    )
+    return (b2[0] <= b1[0] <= b2[1]) or (b1[0] <= b2[0] <= b1[1])
 
 
 def solve(input_data):
-    count = 0
-    for bounds1, bounds2 in parse(input_data):
-        if overlap(bounds1, bounds2):
-            count += 1
-    return count
+    return sum((overlap(bounds1, bounds2) for bounds1, bounds2 in parse(input_data)))
 
 
 # --> Test driven development helpers
