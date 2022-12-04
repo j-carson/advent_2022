@@ -5,11 +5,11 @@ repos:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: check-added-large-files
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: "v0.0.154"
+  hooks:
+    - id: ruff
 -   repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
     -   id: black
-- repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: "v0.0.152"
-  hooks:
-    - id: ruff
