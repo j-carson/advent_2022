@@ -3,13 +3,15 @@ repos:
     rev: v4.4.0
     hooks:
     -   id: trailing-whitespace
+        exclude: input.txt
     -   id: end-of-file-fixer
+        exclude: input.txt
     -   id: check-added-large-files
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: "v0.0.154"
   hooks:
     - id: ruff
--   repo: https://github.com/psf/black
-    rev: 22.10.0
-    hooks:
-    -   id: black
+- repo: https://github.com/psf/black
+  rev: 22.10.0
+  hooks:
+  -   id: black
