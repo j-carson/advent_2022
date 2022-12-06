@@ -6,6 +6,7 @@ import pandas as pd
 import pytest
 from icecream import ic
 
+
 # --> Puzzle solution
 
 
@@ -20,8 +21,7 @@ def idfn(maybe_string):
     if isinstance(maybe_string, str):
         # chop off long input strings in test name output
         return maybe_string[:5].strip()
-    else:
-        return str(maybe_string)
+    return str(maybe_string)
 
 
 # Test any examples given in the problem
