@@ -83,35 +83,28 @@ def parser(input_data):
     root = Directory("/")
     current_location = None
 
-    command_outputs = input_data.split("$")
-    for block in command_outputs:
-        # $ is first char and yields empty block
-        if not block:
-            continue
+    for line in input_data.splitlines():
+        tokens = line.split()
 
-        lines = block.splitlines()
-        command = lines[0].strip()
-
-        command_type = command[:2]
-        assert command_type in ("cd", "ls")
-
-        if command_type == "cd":
-            cd, dest = command.strip().split()
+        if tokens[1] == "cd":
+            dest = tokens[2]
             if dest == "/":
                 current_location = root
             elif dest == "..":
                 current_location = current_location.parent
             else:
                 current_location = current_location.find_child_directory(dest)
+        elif tokens[1] == "ls":
+            # $ ls doesn't change state
+            pass
+        elif tokens[0] == "dir":
+            # dir directory_name
+            current_location.add_subdirectory(tokens[1])
         else:
-            for line in lines[1:]:
-                word1, word2 = line.strip().split()
-                if word1 == "dir":
-                    # dir directory_name
-                    current_location.add_subdirectory(word2)
-                else:
-                    # 1234 file_name
-                    current_location.add_file(File(int(word1), word2))
+            # 1234 file_name
+            assert tokens[0].isdigit()
+            current_location.add_file(File(int(tokens[0]), tokens[1]))
+
     return root
 
 
@@ -127,14 +120,6 @@ def solve(input_data):
 
 # --> Test driven development helpers
 
-# keep pytest ids smaller
-def idfn(maybe_string):
-    if isinstance(maybe_string, str):
-        # chop off long input strings in test name output
-        return maybe_string[:5].strip()
-    return str(maybe_string)
-
-
 # Test any examples given in the problem
 @pytest.fixture(scope="module")
 def sample_tree():
@@ -149,7 +134,7 @@ def test_directory_examples(sample_tree, dirname, size) -> None:
     assert d.size == size
 
 
-def test_sample():
+def test_example():
     assert solve(EXAMPLE) == 24933642
 
 
