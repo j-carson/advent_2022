@@ -84,27 +84,31 @@ def parser(input_data):
     current_location = None
 
     for line in input_data.splitlines():
-        tokens = line.split()
-
-        if tokens[1] == "cd":
-            dest = tokens[2]
-            if dest == "/":
-                current_location = root
-            elif dest == "..":
-                current_location = current_location.parent
-            else:
-                current_location = current_location.find_child_directory(dest)
-        elif tokens[1] == "ls":
-            # $ ls doesn't change state
-            pass
-        elif tokens[0] == "dir":
-            # dir directory_name
-            current_location.add_subdirectory(tokens[1])
-        else:
-            # 1234 file_name
-            assert tokens[0].isdigit()
-            current_location.add_file(File(int(tokens[0]), tokens[1]))
-
+        match line.split():
+            case ("$", command, *args):
+                match command:
+                    case "cd":
+                        match dest := args[0]:
+                            case "/":
+                                current_location = root
+                            case "..":
+                                current_location = current_location.parent
+                            case _:
+                                current_location = (
+                                    current_location.find_child_directory(dest)
+                                )
+                    case "ls":
+                        # $ ls doesn't change state
+                        pass
+                    case _:
+                        raise ValueError(f"Unknown command {command}")
+            case ("dir", name):
+                # dir directory_name
+                current_location.add_subdirectory(name)
+            case (size, name):
+                # 1234 file_name
+                assert size.isdigit()
+                current_location.add_file(File(int(size), name))
     return root
 
 
