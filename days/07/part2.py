@@ -85,23 +85,14 @@ def parser(input_data):
 
     for line in input_data.splitlines():
         match line.split():
-            case ("$", command, *args):
-                match command:
-                    case "cd":
-                        match dest := args[0]:
-                            case "/":
-                                current_location = root
-                            case "..":
-                                current_location = current_location.parent
-                            case _:
-                                current_location = (
-                                    current_location.find_child_directory(dest)
-                                )
-                    case "ls":
-                        # $ ls doesn't change state
-                        pass
-                    case _:
-                        raise ValueError(f"Unknown command {command}")
+            case ("$", "cd", "/"):
+                current_location = root
+            case ("$", "cd", ".."):
+                current_location = current_location.parent
+            case ("$", "cd", dest):
+                current_location = current_location.find_child_directory(dest)
+            case ("$", "ls"):
+                pass
             case ("dir", name):
                 # dir directory_name
                 current_location.add_subdirectory(name)
@@ -109,6 +100,8 @@ def parser(input_data):
                 # 1234 file_name
                 assert size.isdigit()
                 current_location.add_file(File(int(size), name))
+            case _:
+                raise ValueError("No patterns matched!")
     return root
 
 
