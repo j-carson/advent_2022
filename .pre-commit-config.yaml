@@ -9,12 +9,13 @@ repos:
     -   id: end-of-file-fixer
         exclude: input.txt
     -   id: check-added-large-files
-- repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: "v0.0.166"
-  hooks:
-    - id: ruff
-      exclude: days/07/part2.py
 - repo: https://github.com/psf/black
   rev: 22.10.0
   hooks:
   -   id: black
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: "v0.0.169"
+  hooks:
+    - id: ruff
+      # match statement not supported in ruff
+      exclude: days/07/part2.py
