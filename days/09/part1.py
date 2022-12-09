@@ -17,8 +17,6 @@ R 2"""
 
 # --> Puzzle solution
 
-TOO_FAR = 2
-
 
 @dataclass
 class Position:
@@ -27,14 +25,6 @@ class Position:
 
     def log(self, trail):
         trail[(self.row, self.col)] = 1
-
-
-def same_row(p1, p2):
-    return p1.row == p2.row
-
-
-def same_col(p1, p2):
-    return p1.col == p2.col
 
 
 class Rope:

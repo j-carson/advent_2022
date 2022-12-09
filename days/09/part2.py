@@ -27,8 +27,6 @@ U 20
 
 # --> Puzzle solution
 
-TOO_FAR = 2
-
 
 @dataclass
 class Position:
