@@ -10,11 +10,11 @@ repos:
         exclude: input.txt
     -   id: check-added-large-files
 - repo: https://github.com/psf/black
-  rev: 22.10.0
+  rev: 22.12.0
   hooks:
   -   id: black
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: "v0.0.169"
+  rev: "v0.0.172"
   hooks:
     - id: ruff
       # match statement not supported in ruff
