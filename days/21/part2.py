@@ -2,6 +2,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from sympy import Eq, Symbol, sympify
+from sympy import solve as sympy_solve
 
 # --> Puzzle solution
 
@@ -85,14 +86,11 @@ def solve(input_data):
     left_side = Monkey.ALL_MONKEYS[monkey_1].decode()
     right_side = Monkey.ALL_MONKEYS[monkey_2].decode()
 
-    x = Symbol("x")  # noqa
-    problem = sympify(f"{left_side} - {right_side}")
-    result = Eq(problem, 0)
+    x = Symbol("x")
+    result = Eq(sympify(left_side), sympify(right_side))
+    answer = sympy_solve(result, x)
 
-    # Doesn't quite solve the problem, but prints an expression
-    # that's easy to enter into a calculator
-
-    print(result)
+    return answer[0]
 
 
 # --> Setup and run
@@ -100,4 +98,5 @@ def solve(input_data):
 if __name__ == "__main__":
 
     my_input = Path("input.txt").read_text()
-    solve(my_input)
+    answer = solve(my_input)
+    print(answer)
