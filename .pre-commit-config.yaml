@@ -14,8 +14,8 @@ repos:
   hooks:
   -   id: black
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: "v0.0.185"
+  rev: "v0.0.192"
   hooks:
     - id: ruff
       # match statement not supported in ruff
-      exclude: days/07/part2.py|days/18/part2.py
+      exclude: days/07/part2.py|days/18/part2.py|days/24/day_24.py
